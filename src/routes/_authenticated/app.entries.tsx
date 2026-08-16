@@ -88,18 +88,28 @@ function EntriesPage() {
                     <span className="text-xs text-muted-foreground">{entry.word_count} words</span>
                   </div>
                   <p className="text-sm italic text-muted-foreground">{entry.prompt}</p>
-                  <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  <dl className="grid grid-cols-2 gap-3 sm:grid-cols-5">
                     {(
-                      ["vocabulary_richness", "sentence_complexity", "unique_propositions", "repetition_count"] as const
+                      [
+                        "vocabulary_richness",
+                        "sentence_complexity",
+                        "unique_propositions",
+                        "repetition_count",
+                        "speech_tempo_wpm",
+                      ] as const
                     ).map((key) => (
                       <div key={key} className="rounded-lg bg-secondary/60 px-3 py-2">
                         <dt className="text-xs text-muted-foreground">{SCORE_LABELS[key]!.label}</dt>
                         <dd className="font-serif text-xl">
-                          {entry[key] === null ? "—" : Math.round(entry[key]!)}
+                          {entry[key] === null ? "—" : Math.round(Number(entry[key]))}
+                          {key === "speech_tempo_wpm" && entry[key] !== null && (
+                            <span className="ml-1 text-xs text-muted-foreground">wpm</span>
+                          )}
                         </dd>
                       </div>
                     ))}
                   </dl>
+
                 </CardContent>
               </Card>
             </li>
