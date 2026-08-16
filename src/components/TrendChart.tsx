@@ -14,6 +14,7 @@ export interface TrendPoint {
   sentence_complexity: number;
   unique_propositions: number | null;
   repetition_count: number | null;
+  speech_tempo_wpm?: number | null;
 }
 
 const SCORE_SERIES = [
@@ -25,6 +26,11 @@ const COUNT_SERIES = [
   { key: "unique_propositions", name: "Idea density", color: "var(--color-chart-3)" },
   { key: "repetition_count", name: "Semantic repetition", color: "var(--color-chart-4)" },
 ] as const;
+
+const TEMPO_SERIES = [
+  { key: "speech_tempo_wpm", name: "Speech tempo (wpm)", color: "var(--color-chart-5)" },
+] as const;
+
 
 function formatDay(value: string) {
   return new Date(value).toLocaleDateString(undefined, { month: "short", day: "numeric" });
