@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Home, NotebookPen, Share2, Info } from "lucide-react";
+import { Home, NotebookPen, Share2, Info, BookOpen } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -17,6 +17,7 @@ const items = [
   { title: "My Entries", url: "/app/entries", icon: NotebookPen },
   { title: "Sharing", url: "/app/sharing", icon: Share2 },
   { title: "About", url: "/app/about", icon: Info },
+  { title: "Methodology & Research", url: "/app/methodology", icon: BookOpen },
 ] as const;
 
 export function AppSidebar() {
