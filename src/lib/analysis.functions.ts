@@ -19,14 +19,20 @@ export interface AnalyzeResult {
 
 export const analyzeEntry = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { text: string; prompt: string }) => {
+  .inputValidator((input: { text: string; prompt: string; speechTempoWpm?: number | null }) => {
     const text = String(input?.text ?? "").trim();
     const prompt = String(input?.prompt ?? "").trim();
     if (text.length < 40) throw new Error("Please write a little more before saving (at least 40 characters).");
     if (text.length > 20_000) throw new Error("That entry is too long to analyse. Try under 20,000 characters.");
     if (!prompt) throw new Error("Missing prompt.");
-    return { text, prompt };
+    const raw = input?.speechTempoWpm;
+    const speechTempoWpm =
+      typeof raw === "number" && Number.isFinite(raw) && raw > 0
+        ? Math.min(400, Math.round(raw))
+        : null;
+    return { text, prompt, speechTempoWpm };
   })
+
   .handler(async ({ data, context }): Promise<AnalyzeResult> => {
     // Measured in code — no model involved.
     const metrics = computeTextMetrics(data.text);
