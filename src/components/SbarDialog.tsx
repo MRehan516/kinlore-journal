@@ -97,11 +97,11 @@ export function SbarDialog({ entries }: { entries: EntryRow[] }) {
             <Button
               onClick={() => {
                 void navigator.clipboard.writeText(sbar);
-                toast.success("SBAR copied to clipboard");
+                toast.success("Summary copied to clipboard");
               }}
             >
               <ClipboardCopy className="mr-2 h-4 w-4" />
-              Copy SBAR
+              Copy summary
             </Button>
           </>
         )}
