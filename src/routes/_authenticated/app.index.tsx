@@ -41,12 +41,32 @@ function HomePage() {
   const [speechMessage, setSpeechMessage] = useState<string | null>(null);
   const [newCode, setNewCode] = useState<string | null>(null);
   const recognitionRef = useRef<any>(null);
+  // Dictation timing — accumulated across every recording burst for this entry.
+  const dictationMsRef = useRef(0);
+  const dictationStartRef = useRef<number | null>(null);
+  const [dictationUsed, setDictationUsed] = useState(false);
 
   const queryClient = useQueryClient();
   const entries = useEntries();
   const shares = useShares();
   const analyze = useServerFn(analyzeEntry);
   const makeShare = useServerFn(createShare);
+
+  function stopTimer() {
+    if (dictationStartRef.current !== null) {
+      dictationMsRef.current += Date.now() - dictationStartRef.current;
+      dictationStartRef.current = null;
+    }
+  }
+
+  function speechTempoWpm(): number | null {
+    if (!dictationUsed) return null;
+    const seconds = dictationMsRef.current / 1000;
+    const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+    if (seconds < 2 || words === 0) return null;
+    return Math.round((words / seconds) * 60);
+  }
+
 
   useEffect(() => {
     const SpeechRecognition =
