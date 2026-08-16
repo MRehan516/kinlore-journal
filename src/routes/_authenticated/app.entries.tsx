@@ -4,6 +4,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Disclaimer } from "@/components/Disclaimer";
+import { SbarDialog } from "@/components/SbarDialog";
+
 import { SCORE_LABELS } from "@/lib/kinlore";
 import { useEntries } from "@/hooks/useEntries";
 
