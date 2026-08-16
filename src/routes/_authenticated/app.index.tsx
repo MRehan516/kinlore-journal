@@ -12,6 +12,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Disclaimer } from "@/components/Disclaimer";
 import { TrendChart } from "@/components/TrendChart";
+import { CognitiveFootprint } from "@/components/CognitiveFootprint";
+
 import { promptForDate } from "@/lib/kinlore";
 import { analyzeEntry } from "@/lib/analysis.functions";
 import { createShare } from "@/lib/sharing.functions";
