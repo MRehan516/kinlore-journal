@@ -70,6 +70,9 @@ export function TrendChart({ points }: { points: TrendPoint[] }) {
     (d) => d.unique_propositions !== null || d.repetition_count !== null,
   );
 
+  const hasTempo = data.some((d) => d.speech_tempo_wpm !== null && d.speech_tempo_wpm !== undefined);
+
+
   return (
     <div className="space-y-8">
       <div className="space-y-3">
