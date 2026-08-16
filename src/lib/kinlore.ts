@@ -35,12 +35,12 @@ export const SCORE_LABELS: Record<string, { label: string; help: string }> = {
     label: "Sentence structure",
     help: "Measured in code: average sentence length, how much it varies, and clause density.",
   },
-  clarity: {
-    label: "Clarity",
-    help: "Assessed by a language model: how easy the writing is to follow.",
+  unique_propositions: {
+    label: "Idea density",
+    help: "Extracted by the Featherless language model: how many distinct ideas the entry expresses.",
   },
-  sentiment: {
-    label: "Warmth of tone",
-    help: "Assessed by a language model: how positive or heavy the tone reads.",
+  repetition_count: {
+    label: "Semantic repetition",
+    help: "Extracted by the Featherless language model: how many ideas are repeated within the same entry.",
   },
 };

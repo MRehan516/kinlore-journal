@@ -44,8 +44,9 @@ function Landing() {
         </h1>
         <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
           You write to a daily prompt. KinLore measures a few things about how you wrote —
-          word variety, sentence structure, clarity, tone — stores only those numbers, and
-          throws the text away. Over time you can see gentle patterns in your own writing.
+          word variety, sentence structure, idea density, semantic repetition — stores only those
+          numbers, and throws the text away. Over time you can see gentle patterns in your own
+          writing.
         </p>
 
         <div className="mt-8 flex flex-wrap items-center gap-3">

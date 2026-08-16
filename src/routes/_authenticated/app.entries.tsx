@@ -80,11 +80,13 @@ function EntriesPage() {
                   <p className="text-sm italic text-muted-foreground">{entry.prompt}</p>
                   <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                     {(
-                      ["vocabulary_richness", "sentence_complexity", "clarity", "sentiment"] as const
+                      ["vocabulary_richness", "sentence_complexity", "unique_propositions", "repetition_count"] as const
                     ).map((key) => (
                       <div key={key} className="rounded-lg bg-secondary/60 px-3 py-2">
                         <dt className="text-xs text-muted-foreground">{SCORE_LABELS[key]!.label}</dt>
-                        <dd className="font-serif text-xl">{Math.round(entry[key])}</dd>
+                        <dd className="font-serif text-xl">
+                          {entry[key] === null ? "—" : Math.round(entry[key]!)}
+                        </dd>
                       </div>
                     ))}
                   </dl>
