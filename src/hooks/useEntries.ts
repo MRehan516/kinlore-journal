@@ -8,8 +8,8 @@ export interface EntryRow {
   word_count: number;
   vocabulary_richness: number;
   sentence_complexity: number;
-  clarity: number;
-  sentiment: number;
+  unique_propositions: number | null;
+  repetition_count: number | null;
   brunet_w: number;
   mean_sentence_length: number;
   note: string | null;
@@ -24,7 +24,7 @@ export function useEntries() {
       const { data, error } = await supabase
         .from("journal_sessions")
         .select(
-          "id, created_at, prompt, word_count, vocabulary_richness, sentence_complexity, clarity, sentiment, brunet_w, mean_sentence_length, note",
+          "id, created_at, prompt, word_count, vocabulary_richness, sentence_complexity, unique_propositions, repetition_count, brunet_w, mean_sentence_length, note",
         )
         .order("created_at", { ascending: false })
         .limit(200);
