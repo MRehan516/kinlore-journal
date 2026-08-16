@@ -87,10 +87,14 @@ function HomePage() {
       if (chunk.trim()) setText((prev) => (prev ? `${prev} ${chunk.trim()}` : chunk.trim()));
     };
     recognition.onerror = () => {
+      stopTimer();
       setSpeech("error");
       setSpeechMessage("Dictation stopped working. You can keep typing below.");
     };
-    recognition.onend = () => setSpeech((s) => (s === "listening" ? "idle" : s));
+    recognition.onend = () => {
+      stopTimer();
+      setSpeech((s) => (s === "listening" ? "idle" : s));
+    };
     recognitionRef.current = recognition;
     return () => {
       try {
@@ -106,11 +110,14 @@ function HomePage() {
     if (!recognition) return;
     if (speech === "listening") {
       recognition.stop();
+      stopTimer();
       setSpeech("idle");
       return;
     }
     try {
       recognition.start();
+      dictationStartRef.current = Date.now();
+      setDictationUsed(true);
       setSpeech("listening");
       setSpeechMessage(null);
     } catch {
@@ -120,14 +127,21 @@ function HomePage() {
   }
 
   const save = useMutation({
-    mutationFn: () => analyze({ data: { text, prompt } }),
+    mutationFn: () => {
+      stopTimer();
+      return analyze({ data: { text, prompt, speechTempoWpm: speechTempoWpm() } });
+    },
     onSuccess: () => {
       setText(""); // the draft only ever lived here
+      dictationMsRef.current = 0;
+      dictationStartRef.current = null;
+      setDictationUsed(false);
       void queryClient.invalidateQueries({ queryKey: entriesQueryKey });
       toast.success("Saved. Your words were scored and then discarded.");
     },
     onError: (error: Error) => toast.error(error.message || "Something went wrong. Please try again."),
   });
+
 
   const share = useMutation({
     mutationFn: () => makeShare({ data: {} }),
