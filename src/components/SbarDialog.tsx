@@ -71,14 +71,14 @@ export function SbarDialog({ entries }: { entries: EntryRow[] }) {
       <DialogTrigger asChild>
         <Button variant="secondary">
           <FileText className="mr-2 h-4 w-4" />
-          Generate Physician SBAR
+          Export Doctor Summary
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="font-serif text-2xl">Physician handoff (SBAR)</DialogTitle>
+          <DialogTitle className="font-serif text-2xl">Data Summary for Doctor</DialogTitle>
           <DialogDescription>
-            A plain-text summary of your last 7 days of measurements, formatted for a clinician.
+            A plain-text readout of your last 7 days of measurements that you can copy and share.
           </DialogDescription>
         </DialogHeader>
 
