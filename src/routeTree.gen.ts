@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
 import { Route as AuthenticatedAppEntriesRouteImport } from './routes/_authenticated/app.entries'
+import { Route as AuthenticatedAppSharingRouteImport } from './routes/_authenticated/app.sharing'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -45,18 +46,25 @@ const AuthenticatedAppEntriesRoute = AuthenticatedAppEntriesRouteImport.update({
   path: '/entries',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppSharingRoute = AuthenticatedAppSharingRouteImport.update({
+  id: '/sharing',
+  path: '/sharing',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/app': typeof AuthenticatedAppRouteWithChildren
   '/app/entries': typeof AuthenticatedAppEntriesRoute
+  '/app/sharing': typeof AuthenticatedAppSharingRoute
   '/app/': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/app/entries': typeof AuthenticatedAppEntriesRoute
+  '/app/sharing': typeof AuthenticatedAppSharingRoute
   '/app': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRoutesById {
@@ -66,13 +74,14 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
   '/_authenticated/app/entries': typeof AuthenticatedAppEntriesRoute
+  '/_authenticated/app/sharing': typeof AuthenticatedAppSharingRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/app' | '/app/entries' | '/app/'
+  fullPaths: '/' | '/auth' | '/app' | '/app/entries' | '/app/sharing' | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/app/entries' | '/app'
+  to: '/' | '/auth' | '/app/entries' | '/app/sharing' | '/app'
   id:
     | '__root__'
     | '/'
@@ -80,6 +89,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/app'
     | '/_authenticated/app/entries'
+    | '/_authenticated/app/sharing'
     | '/_authenticated/app/'
   fileRoutesById: FileRoutesById
 }
@@ -133,16 +143,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppEntriesRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/sharing': {
+      id: '/_authenticated/app/sharing'
+      path: '/sharing'
+      fullPath: '/app/sharing'
+      preLoaderRoute: typeof AuthenticatedAppSharingRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
   }
 }
 
 interface AuthenticatedAppRouteChildren {
   AuthenticatedAppEntriesRoute: typeof AuthenticatedAppEntriesRoute
+  AuthenticatedAppSharingRoute: typeof AuthenticatedAppSharingRoute
   AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
 }
 
 const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppEntriesRoute: AuthenticatedAppEntriesRoute,
+  AuthenticatedAppSharingRoute: AuthenticatedAppSharingRoute,
   AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
 }
 
