@@ -140,6 +140,40 @@ export function TrendChart({ points }: { points: TrendPoint[] }) {
           <Legend series={COUNT_SERIES} />
         </div>
       )}
+
+      {hasTempo && (
+        <div className="space-y-3">
+          <p className="text-sm text-muted-foreground">
+            Measured in your browser while dictating — words spoken per minute. Typed entries don't
+            appear here.
+          </p>
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={data} margin={{ top: 8, right: 12, bottom: 4, left: -20 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
+                <XAxis dataKey="day" stroke="var(--color-muted-foreground)" fontSize={12} />
+                <YAxis allowDecimals={false} stroke="var(--color-muted-foreground)" fontSize={12} />
+                <Tooltip contentStyle={tooltipStyle} />
+                {TEMPO_SERIES.map((series) => (
+                  <Line
+                    key={series.key}
+                    type="monotone"
+                    dataKey={series.key}
+                    name={series.name}
+                    stroke={series.color}
+                    strokeWidth={2}
+                    dot={{ r: 3 }}
+                    activeDot={{ r: 5 }}
+                    connectNulls
+                  />
+                ))}
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <Legend series={TEMPO_SERIES} />
+        </div>
+      )}
     </div>
+
   );
 }
