@@ -4,8 +4,11 @@
 
 ## A Family legacy journal that prioritize Privacy that passively extracts longitudinal cognitive biomarkers leveraging deterministic math and secure LLM inference 
 
+# INSPIRATION
+## This idea is inspired by a Cosuin's Grand mother who felt trouble forming sentences and the sheer negligence led to increased severity of Alzheimer's in her,This is a simple application that i feel can be used by her next generation so as to have a hint before it becomes fatal to a healthy life and happy moments.
+
 # PROBLEM 
-## The existing Clinical applications used for diagnosis of health issues like Alzheimer's are intimidating, that makes the users feel unsure and unsafe regarding their privacy leading to patients or elderly abandoning them. The mere sniff or whisper of someone using this app to identify if there is chance of such disease happening in near future is treated like a taboo. Even with advancements in Artificial Intelligence and their Large language models there is always a looming risk and threat that LLMs might hallucinate leading to incorrect diagnosis or recommendations from AI.
+The existing Clinical applications used for diagnosis of health issues like Alzheimer's are intimidating, that makes the users feel unsure and unsafe regarding their privacy leading to patients or elderly abandoning them. The mere sniff or whisper of someone using this app to identify if there is chance of such disease happening in near future is treated like a taboo. Even with advancements in Artificial Intelligence and their Large language models there is always a looming risk and threat that LLMs might hallucinate leading to incorrect diagnosis or recommendations from AI.
 
 # SOLUTION
 ## I have built KinLore , a Trojan Horse application that has a warm, simple and easy to operate daily journal that runs rigorous computational linguistics in the background to track cognitive changes or shifts over a certain period of time.
