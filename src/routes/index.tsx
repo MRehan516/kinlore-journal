@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Disclaimer } from "@/components/Disclaimer";
 import { PenLine, ShieldCheck, LineChart } from "lucide-react";
+import kinloreLogo from "@/assets/kinlore-logo.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,7 +28,16 @@ function Landing() {
   return (
     <main className="min-h-screen bg-background">
       <header className="mx-auto flex max-w-5xl items-center justify-between px-6 py-6">
-        <span className="font-serif text-xl font-semibold tracking-tight">KinLore</span>
+        <span className="flex items-center gap-2">
+          <img
+            src={kinloreLogo}
+            alt="KinLore logo"
+            width={40}
+            height={40}
+            className="h-10 w-10 object-contain"
+          />
+          <span className="font-serif text-xl font-semibold tracking-tight">KinLore</span>
+        </span>
         <div className="flex items-center gap-2">
           <Button asChild variant="ghost" size="sm">
             <Link to="/shared">Have a share code?</Link>
