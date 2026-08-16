@@ -62,7 +62,9 @@ export const analyzeEntry = createServerFn({ method: "POST" })
         note: judged.note,
         unique_propositions: structural.uniquePropositions,
         repetition_count: structural.repetitionCount,
+        speech_tempo_wpm: data.speechTempoWpm,
       })
+
 
       .select(
         "id, created_at, prompt, word_count, vocabulary_richness, sentence_complexity, clarity, sentiment, brunet_w, mean_sentence_length, note",
