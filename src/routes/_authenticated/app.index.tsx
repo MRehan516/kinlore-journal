@@ -12,6 +12,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Disclaimer } from "@/components/Disclaimer";
 import { TrendChart } from "@/components/TrendChart";
+import { CognitiveFootprint } from "@/components/CognitiveFootprint";
+
 import { promptForDate } from "@/lib/kinlore";
 import { analyzeEntry } from "@/lib/analysis.functions";
 import { createShare } from "@/lib/sharing.functions";
@@ -41,12 +43,32 @@ function HomePage() {
   const [speechMessage, setSpeechMessage] = useState<string | null>(null);
   const [newCode, setNewCode] = useState<string | null>(null);
   const recognitionRef = useRef<any>(null);
+  // Dictation timing — accumulated across every recording burst for this entry.
+  const dictationMsRef = useRef(0);
+  const dictationStartRef = useRef<number | null>(null);
+  const [dictationUsed, setDictationUsed] = useState(false);
 
   const queryClient = useQueryClient();
   const entries = useEntries();
   const shares = useShares();
   const analyze = useServerFn(analyzeEntry);
   const makeShare = useServerFn(createShare);
+
+  function stopTimer() {
+    if (dictationStartRef.current !== null) {
+      dictationMsRef.current += Date.now() - dictationStartRef.current;
+      dictationStartRef.current = null;
+    }
+  }
+
+  function speechTempoWpm(): number | null {
+    if (!dictationUsed) return null;
+    const seconds = dictationMsRef.current / 1000;
+    const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+    if (seconds < 2 || words === 0) return null;
+    return Math.round((words / seconds) * 60);
+  }
+
 
   useEffect(() => {
     const SpeechRecognition =
@@ -67,10 +89,14 @@ function HomePage() {
       if (chunk.trim()) setText((prev) => (prev ? `${prev} ${chunk.trim()}` : chunk.trim()));
     };
     recognition.onerror = () => {
+      stopTimer();
       setSpeech("error");
       setSpeechMessage("Dictation stopped working. You can keep typing below.");
     };
-    recognition.onend = () => setSpeech((s) => (s === "listening" ? "idle" : s));
+    recognition.onend = () => {
+      stopTimer();
+      setSpeech((s) => (s === "listening" ? "idle" : s));
+    };
     recognitionRef.current = recognition;
     return () => {
       try {
@@ -86,11 +112,14 @@ function HomePage() {
     if (!recognition) return;
     if (speech === "listening") {
       recognition.stop();
+      stopTimer();
       setSpeech("idle");
       return;
     }
     try {
       recognition.start();
+      dictationStartRef.current = Date.now();
+      setDictationUsed(true);
       setSpeech("listening");
       setSpeechMessage(null);
     } catch {
@@ -100,14 +129,21 @@ function HomePage() {
   }
 
   const save = useMutation({
-    mutationFn: () => analyze({ data: { text, prompt } }),
+    mutationFn: () => {
+      stopTimer();
+      return analyze({ data: { text, prompt, speechTempoWpm: speechTempoWpm() } });
+    },
     onSuccess: () => {
       setText(""); // the draft only ever lived here
+      dictationMsRef.current = 0;
+      dictationStartRef.current = null;
+      setDictationUsed(false);
       void queryClient.invalidateQueries({ queryKey: entriesQueryKey });
       toast.success("Saved. Your words were scored and then discarded.");
     },
     onError: (error: Error) => toast.error(error.message || "Something went wrong. Please try again."),
   });
+
 
   const share = useMutation({
     mutationFn: () => makeShare({ data: {} }),
@@ -214,6 +250,27 @@ function HomePage() {
           )}
         </CardContent>
       </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="font-serif text-xl">Cognitive footprint</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {entries.isLoading ? (
+            <Skeleton className="h-72 w-full" />
+          ) : points.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              Your footprint appears here once you've saved an entry.
+            </p>
+          ) : (
+            <div className="space-y-4">
+              <CognitiveFootprint entries={points} />
+              <Disclaimer />
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
 
       <Card>
         <CardHeader>

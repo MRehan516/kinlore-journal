@@ -43,4 +43,9 @@ export const SCORE_LABELS: Record<string, { label: string; help: string }> = {
     label: "Semantic repetition",
     help: "Extracted by the Featherless language model: how many ideas are repeated within the same entry.",
   },
+  speech_tempo_wpm: {
+    label: "Speech tempo",
+    help: "Measured in the browser while you dictate: words spoken per minute. Empty for typed entries.",
+  },
 };
+

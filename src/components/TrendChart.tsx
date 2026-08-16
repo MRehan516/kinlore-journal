@@ -14,6 +14,7 @@ export interface TrendPoint {
   sentence_complexity: number;
   unique_propositions: number | null;
   repetition_count: number | null;
+  speech_tempo_wpm?: number | null;
 }
 
 const SCORE_SERIES = [
@@ -25,6 +26,11 @@ const COUNT_SERIES = [
   { key: "unique_propositions", name: "Idea density", color: "var(--color-chart-3)" },
   { key: "repetition_count", name: "Semantic repetition", color: "var(--color-chart-4)" },
 ] as const;
+
+const TEMPO_SERIES = [
+  { key: "speech_tempo_wpm", name: "Speech tempo (wpm)", color: "var(--color-chart-5)" },
+] as const;
+
 
 function formatDay(value: string) {
   return new Date(value).toLocaleDateString(undefined, { month: "short", day: "numeric" });
@@ -63,6 +69,9 @@ export function TrendChart({ points }: { points: TrendPoint[] }) {
   const hasCounts = data.some(
     (d) => d.unique_propositions !== null || d.repetition_count !== null,
   );
+
+  const hasTempo = data.some((d) => d.speech_tempo_wpm !== null && d.speech_tempo_wpm !== undefined);
+
 
   return (
     <div className="space-y-8">
@@ -131,6 +140,40 @@ export function TrendChart({ points }: { points: TrendPoint[] }) {
           <Legend series={COUNT_SERIES} />
         </div>
       )}
+
+      {hasTempo && (
+        <div className="space-y-3">
+          <p className="text-sm text-muted-foreground">
+            Measured in your browser while dictating — words spoken per minute. Typed entries don't
+            appear here.
+          </p>
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={data} margin={{ top: 8, right: 12, bottom: 4, left: -20 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
+                <XAxis dataKey="day" stroke="var(--color-muted-foreground)" fontSize={12} />
+                <YAxis allowDecimals={false} stroke="var(--color-muted-foreground)" fontSize={12} />
+                <Tooltip contentStyle={tooltipStyle} />
+                {TEMPO_SERIES.map((series) => (
+                  <Line
+                    key={series.key}
+                    type="monotone"
+                    dataKey={series.key}
+                    name={series.name}
+                    stroke={series.color}
+                    strokeWidth={2}
+                    dot={{ r: 3 }}
+                    activeDot={{ r: 5 }}
+                    connectNulls
+                  />
+                ))}
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <Legend series={TEMPO_SERIES} />
+        </div>
+      )}
     </div>
+
   );
 }

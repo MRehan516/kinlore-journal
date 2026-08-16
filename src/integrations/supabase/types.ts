@@ -28,6 +28,7 @@ export type Database = {
           sd_sentence_length: number
           sentence_complexity: number
           sentiment: number
+          speech_tempo_wpm: number | null
           unique_propositions: number | null
           unique_words: number
           user_id: string
@@ -47,6 +48,7 @@ export type Database = {
           sd_sentence_length?: number
           sentence_complexity?: number
           sentiment?: number
+          speech_tempo_wpm?: number | null
           unique_propositions?: number | null
           unique_words?: number
           user_id: string
@@ -66,6 +68,7 @@ export type Database = {
           sd_sentence_length?: number
           sentence_complexity?: number
           sentiment?: number
+          speech_tempo_wpm?: number | null
           unique_propositions?: number | null
           unique_words?: number
           user_id?: string

@@ -1,0 +1,1 @@
+ALTER TABLE public.journal_sessions ADD COLUMN IF NOT EXISTS speech_tempo_wpm numeric;
