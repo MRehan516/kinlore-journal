@@ -24,9 +24,11 @@ export type Database = {
           mean_sentence_length: number
           note: string | null
           prompt: string
+          repetition_count: number | null
           sd_sentence_length: number
           sentence_complexity: number
           sentiment: number
+          unique_propositions: number | null
           unique_words: number
           user_id: string
           vocabulary_richness: number
@@ -41,9 +43,11 @@ export type Database = {
           mean_sentence_length?: number
           note?: string | null
           prompt: string
+          repetition_count?: number | null
           sd_sentence_length?: number
           sentence_complexity?: number
           sentiment?: number
+          unique_propositions?: number | null
           unique_words?: number
           user_id: string
           vocabulary_richness?: number
@@ -58,9 +62,11 @@ export type Database = {
           mean_sentence_length?: number
           note?: string | null
           prompt?: string
+          repetition_count?: number | null
           sd_sentence_length?: number
           sentence_complexity?: number
           sentiment?: number
+          unique_propositions?: number | null
           unique_words?: number
           user_id?: string
           vocabulary_richness?: number

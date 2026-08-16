@@ -31,8 +31,12 @@ export const analyzeEntry = createServerFn({ method: "POST" })
     // Measured in code — no model involved.
     const metrics = computeTextMetrics(data.text);
 
-    // Only the parts that need language understanding go to the model.
-    const judged = await judgeClarityAndSentiment(data.text);
+    // Only the parts that need language understanding go to a model.
+    const { extractStructuralFeatures } = await import("@/lib/featherless.server");
+    const [judged, structural] = await Promise.all([
+      judgeClarityAndSentiment(data.text),
+      extractStructuralFeatures(data.text),
+    ]);
 
     const { data: row, error } = await context.supabase
       .from("journal_sessions")
@@ -50,7 +54,10 @@ export const analyzeEntry = createServerFn({ method: "POST" })
         clarity: judged.clarity,
         sentiment: judged.sentiment,
         note: judged.note,
+        unique_propositions: structural.uniquePropositions,
+        repetition_count: structural.repetitionCount,
       })
+
       .select(
         "id, created_at, prompt, word_count, vocabulary_richness, sentence_complexity, clarity, sentiment, brunet_w, mean_sentence_length, note",
       )
