@@ -110,7 +110,7 @@ function HomePage() {
   });
 
   const share = useMutation({
-    mutationFn: () => makeShare({ data: { label: null } }),
+    mutationFn: () => makeShare({ data: {} }),
     onSuccess: (result) => {
       setNewCode(result.code);
       void queryClient.invalidateQueries({ queryKey: sharesQueryKey });
