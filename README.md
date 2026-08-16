@@ -1,5 +1,7 @@
 # KinLore 
 
+## Try it out at - https://kin-lore-insights.lovable.app
+
 ## A Family legacy journal that prioritize Privacy that passively extracts longitudinal cognitive biomarkers leveraging deterministic math and secure LLM inference 
 
 # PROBLEM 
@@ -15,43 +17,21 @@
 KinLore tech stack
 
 Frontend - React 19 + TypeScript, TanStack Start v1 (file-based routing, SSR), Vite 7
-
 Styling - Tailwind CSS v4 (src/styles.css theme tokens), shadcn/ui (new-york), Lucide icons, warm-parchment palette
-
 Data/state - TanStack Query, TanStack Router loaders
-
 Charts -  Recharts (line trends + radar "Cognitive Footprint")
-
 Backend - Lovable Cloud (managed Postgres + auth) via @supabase/supabase-js, RLS on every table
-
-Server logic: TanStack createServerFn server functions (analysis, share-code create/revoke, public redemption) running on the Cloudflare Workers edge 
-runtime — no Supabase edge functions
-
+Server logic: TanStack createServerFn server functions (analysis, share-code create/revoke, public redemption) running on the Cloudflare Workers edge runtime — no Supabase edge functions
 Auth - email magic link, _authenticated route gate + bearer-token function middleware
-
 AI - Featherless API (meta-llama/Meta-Llama-3.1-8B-Instruct, tool-calling) for idea density / semantic repetition; Lovable AI Gateway judge exists server-side but is hidden from UI
-
 Deterministic analysis - custom TS in src/lib/text-metrics.ts (Brunét's Index, sentence stats), Web Speech API for dictation + WPM
-
 Tooling - Bun, ESLint, Prettier, TypeScript path aliases
 
 
 # Diagram
 
-[ Frontend: React + Browser Speech API ]
-                   |
-                   v (Raw Text + Speech Timing)
-[ Lovable / Supabase Server Function ]
-                   |
-        +----------+----------+
-        |                     |
-[ Deterministic Math ]   [ Featherless.ai API ]
- (Brunét's Index)         (Semantic Extraction)
-        |                     |
-        +----------+----------+
-                   |
-                   v (Integers Only!)
-[ Postgres Database: Zero-Text Stored ]
+<img width="839" height="747" alt="image" src="https://github.com/user-attachments/assets/5a527ea0-25b5-459f-99b0-069e3eecbd55" />
+
 
 # How it works (The core Metrics)
 
