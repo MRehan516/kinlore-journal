@@ -145,3 +145,13 @@
     color: var(--color-foreground);
   }
 }
+
+@layer base {
+  h1, h2, h3, .font-serif {
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+  }
+  body {
+    font-family: var(--font-sans);
+  }
+}
