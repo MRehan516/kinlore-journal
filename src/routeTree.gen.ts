@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
+import { Route as AuthenticatedAppAboutRouteImport } from './routes/_authenticated/app.about'
 import { Route as AuthenticatedAppEntriesRouteImport } from './routes/_authenticated/app.entries'
 import { Route as AuthenticatedAppSharingRouteImport } from './routes/_authenticated/app.sharing'
 
@@ -41,6 +42,11 @@ const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppAboutRoute = AuthenticatedAppAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 const AuthenticatedAppEntriesRoute = AuthenticatedAppEntriesRouteImport.update({
   id: '/entries',
   path: '/entries',
@@ -56,6 +62,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/app': typeof AuthenticatedAppRouteWithChildren
+  '/app/about': typeof AuthenticatedAppAboutRoute
   '/app/entries': typeof AuthenticatedAppEntriesRoute
   '/app/sharing': typeof AuthenticatedAppSharingRoute
   '/app/': typeof AuthenticatedAppIndexRoute
@@ -63,6 +70,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/app/about': typeof AuthenticatedAppAboutRoute
   '/app/entries': typeof AuthenticatedAppEntriesRoute
   '/app/sharing': typeof AuthenticatedAppSharingRoute
   '/app': typeof AuthenticatedAppIndexRoute
@@ -73,21 +81,30 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
+  '/_authenticated/app/about': typeof AuthenticatedAppAboutRoute
   '/_authenticated/app/entries': typeof AuthenticatedAppEntriesRoute
   '/_authenticated/app/sharing': typeof AuthenticatedAppSharingRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/app' | '/app/entries' | '/app/sharing' | '/app/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/app'
+    | '/app/about'
+    | '/app/entries'
+    | '/app/sharing'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/app/entries' | '/app/sharing' | '/app'
+  to: '/' | '/auth' | '/app/about' | '/app/entries' | '/app/sharing' | '/app'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/app'
+    | '/_authenticated/app/about'
     | '/_authenticated/app/entries'
     | '/_authenticated/app/sharing'
     | '/_authenticated/app/'
@@ -136,6 +153,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppIndexRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/about': {
+      id: '/_authenticated/app/about'
+      path: '/about'
+      fullPath: '/app/about'
+      preLoaderRoute: typeof AuthenticatedAppAboutRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/entries': {
       id: '/_authenticated/app/entries'
       path: '/entries'
@@ -154,12 +178,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAppRouteChildren {
+  AuthenticatedAppAboutRoute: typeof AuthenticatedAppAboutRoute
   AuthenticatedAppEntriesRoute: typeof AuthenticatedAppEntriesRoute
   AuthenticatedAppSharingRoute: typeof AuthenticatedAppSharingRoute
   AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
 }
 
 const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
+  AuthenticatedAppAboutRoute: AuthenticatedAppAboutRoute,
   AuthenticatedAppEntriesRoute: AuthenticatedAppEntriesRoute,
   AuthenticatedAppSharingRoute: AuthenticatedAppSharingRoute,
   AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
