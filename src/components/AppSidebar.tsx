@@ -1,4 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
+import kinloreLogo from "@/assets/kinlore-logo.png";
 import { Home, NotebookPen, Share2, Info, BookOpen } from "lucide-react";
 import {
   Sidebar,
@@ -26,7 +27,16 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="px-4 py-4">
-        <span className="font-serif text-lg font-semibold tracking-tight">KinLore</span>
+        <span className="flex items-center gap-2">
+          <img
+            src={kinloreLogo}
+            alt="KinLore logo"
+            width={32}
+            height={32}
+            className="h-8 w-8 shrink-0 object-contain"
+          />
+          <span className="font-serif text-lg font-semibold tracking-tight">KinLore</span>
+        </span>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
