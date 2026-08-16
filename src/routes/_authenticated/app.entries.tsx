@@ -34,7 +34,15 @@ function EntriesPage() {
         </p>
       </header>
 
+      <div className="flex flex-wrap items-center gap-3">
+        <SbarDialog entries={entries.data ?? []} />
+        <span className="text-sm text-muted-foreground">
+          A copyable 7-day summary you can bring to a doctor's appointment.
+        </span>
+      </div>
+
       <Disclaimer />
+
 
       {entries.isLoading ? (
         <div className="space-y-3">
