@@ -43,7 +43,7 @@ export const redeemShareCode = createServerFn({ method: "POST" })
     await supabaseAdmin.from("share_attempts").insert({ ip_hash: ipHash });
 
     const shortWindow = new Date(now - RATE_LIMIT_WINDOW.shortMinutes * 60_000).toISOString();
-    const dayWindow = new Date(now - 24 * 60 * 60_000 * 60).toISOString();
+    const dayWindow = new Date(now - 24 * 60 * 60 * 1000).toISOString();
 
     const [{ count: shortCount }, { count: dayCount }] = await Promise.all([
       supabaseAdmin
