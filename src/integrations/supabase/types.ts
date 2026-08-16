@@ -14,7 +14,111 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      journal_sessions: {
+        Row: {
+          brunet_w: number
+          clarity: number
+          clause_density: number
+          created_at: string
+          id: string
+          mean_sentence_length: number
+          note: string | null
+          prompt: string
+          sd_sentence_length: number
+          sentence_complexity: number
+          sentiment: number
+          unique_words: number
+          user_id: string
+          vocabulary_richness: number
+          word_count: number
+        }
+        Insert: {
+          brunet_w?: number
+          clarity?: number
+          clause_density?: number
+          created_at?: string
+          id?: string
+          mean_sentence_length?: number
+          note?: string | null
+          prompt: string
+          sd_sentence_length?: number
+          sentence_complexity?: number
+          sentiment?: number
+          unique_words?: number
+          user_id: string
+          vocabulary_richness?: number
+          word_count?: number
+        }
+        Update: {
+          brunet_w?: number
+          clarity?: number
+          clause_density?: number
+          created_at?: string
+          id?: string
+          mean_sentence_length?: number
+          note?: string | null
+          prompt?: string
+          sd_sentence_length?: number
+          sentence_complexity?: number
+          sentiment?: number
+          unique_words?: number
+          user_id?: string
+          vocabulary_richness?: number
+          word_count?: number
+        }
+        Relationships: []
+      }
+      share_attempts: {
+        Row: {
+          attempted_at: string
+          id: string
+          ip_hash: string
+        }
+        Insert: {
+          attempted_at?: string
+          id?: string
+          ip_hash: string
+        }
+        Update: {
+          attempted_at?: string
+          id?: string
+          ip_hash?: string
+        }
+        Relationships: []
+      }
+      shared_access: {
+        Row: {
+          code_hash: string
+          code_prefix: string
+          created_at: string
+          expires_at: string
+          id: string
+          label: string | null
+          revoked_at: string | null
+          user_id: string
+        }
+        Insert: {
+          code_hash: string
+          code_prefix: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          label?: string | null
+          revoked_at?: string | null
+          user_id: string
+        }
+        Update: {
+          code_hash?: string
+          code_prefix?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          label?: string | null
+          revoked_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
