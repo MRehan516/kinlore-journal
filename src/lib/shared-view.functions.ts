@@ -7,6 +7,7 @@ export interface SharedPoint {
   sentence_complexity: number;
   unique_propositions: number | null;
   repetition_count: number | null;
+  speech_tempo_wpm: number | null;
 }
 
 export interface SharedSummary {
@@ -86,7 +87,7 @@ export const redeemShareCode = createServerFn({ method: "POST" })
 
     const { data: rows, error } = await supabaseAdmin
       .from("journal_sessions")
-      .select("created_at, vocabulary_richness, sentence_complexity, unique_propositions, repetition_count")
+      .select("created_at, vocabulary_richness, sentence_complexity, unique_propositions, repetition_count, speech_tempo_wpm")
       .eq("user_id", share.user_id)
       .order("created_at", { ascending: true })
       .limit(200);
