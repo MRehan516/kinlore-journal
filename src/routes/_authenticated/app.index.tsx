@@ -251,6 +251,27 @@ function HomePage() {
 
       <Card>
         <CardHeader>
+          <CardTitle className="font-serif text-xl">Cognitive footprint</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {entries.isLoading ? (
+            <Skeleton className="h-72 w-full" />
+          ) : points.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              Your footprint appears here once you've saved an entry.
+            </p>
+          ) : (
+            <div className="space-y-4">
+              <CognitiveFootprint entries={points} />
+              <Disclaimer />
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+
+      <Card>
+        <CardHeader>
           <CardTitle className="font-serif text-xl">Share with someone I trust</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
